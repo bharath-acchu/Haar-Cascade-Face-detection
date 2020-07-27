@@ -13,10 +13,10 @@ import numpy as np
 
 
 
-def draw_rectangle(faces,img_copy):
+def draw_rectangle(faces,img1_copy):
     for (x,y,w,h) in faces:
-      		cv2.rectangle(img_copy, (x, y), (x+w, y+h), (300, 0, 0), 2)
-    return img_copy
+      		cv2.rectangle(img1_copy, (x, y), (x+w, y+h), (300, 0, 0), 2)
+    return img1_copy
     
 
 def select_image():
@@ -32,13 +32,13 @@ def select_image():
 		# load the image from disk, convert it to grayscale, and detect
 		# edges in it
 		image = cv2.imread(path)
-		img_copy = np.copy(image)
+		img1_copy = np.copy(image)
 		face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 		# Detect faces
-		faces = face_cascade.detectMultiScale(gray, 1.1, 8)
-		img_copy = draw_rectangle(faces,img_copy)
+		faces = face_cascade.detectMultiScale(gray, 1.1,11)
+		img_copy = draw_rectangle(faces,img1_copy)
 
 		# OpenCV represents images in BGR order; however PIL represents
 		# images in RGB order, so we need to swap the channels
@@ -55,7 +55,7 @@ def select_image():
 		# if the panels are None, initialize them
 		if panelA is None or panelB is None:
 			# the first panel will store our original image
-			panelA = Label(root,image=image)
+			panelA = Label(image=image)
 		
 			panelA.image = image
 			
